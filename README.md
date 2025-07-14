@@ -1,5 +1,5 @@
 # Keepr 
-## A simple time-keeping-and-note-scribing-tool
+### A simple time-keeping-and-note-scribing-tool.
 #### (Version 1 coming soon!)
 
 Keepr is meant to be simple, free, and dedicated to 
