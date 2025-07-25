@@ -7,27 +7,27 @@ class Clock(customtkinter.CTkFrame):
         super().__init__(master, **kwargs)
 
         self.container = customtkinter.CTkFrame(self)
-        self.container.pack(pady=10)
+        self.container.pack(anchor="w", padx=10, pady=10)
 
         self.markers = customtkinter.CTkLabel(
-            self.container, text="00:00:00", width=2, height=2, font=("Arial", 50)
+            self.container, text="00:00:00", width=2, height=2, font=("Arial", 60)
         )
-        self.markers.pack(side="left", padx=(0,10))
+        self.markers.pack(side="left", padx=(0, 70))
 
         self.button_frame = customtkinter.CTkFrame(self.container)
         self.button_frame.pack(side="left")
 
         self.start_button = customtkinter.CTkButton(
-            self.button_frame, text="Start", command=self.start_clock
+            self.button_frame, width=50, height=50, text="Start", command=self.start_clock
         )
         self.start_button.pack(pady=5)
 
         self.stop_button = customtkinter.CTkButton(
-            self.button_frame, text="Stop", command=self.stop_clock
+            self.button_frame, width=50, height=50, text="Stop", command=self.stop_clock
         )
-
-        self.stop_button.pack(pady=5)
         
+        self.stop_button.pack(pady=5)
+
         self.active = False
         self.start_time = None
         self.update_label()
@@ -49,27 +49,40 @@ class Clock(customtkinter.CTkFrame):
 
 
 class Journal(customtkinter.CTkFrame):
-    def __init__(self, master, clock:Clock, **kwargs):
+    def __init__(self, master, clock: Clock, **kwargs):
         super().__init__(master, **kwargs)
+
+        self.container_1 = customtkinter.CTkFrame(self)
+        self.container_1.pack(anchor="w", expand="true", fill="x")
+        self.container_2 = customtkinter.CTkFrame(self)
+        self.container_2.pack(anchor="w", expand="true", fill="x")
 
         self.clock = clock
         self.logs = []
-        self.team_entry = customtkinter.CTkEntry(self, placeholder_text="team")
-        self.team_entry.pack(side="left")
+        self.team_entry = customtkinter.CTkEntry(
+            self.container_1, placeholder_text="team", width=125
+        )
+        self.team_entry.pack(side="left", fill="x", padx=5)
 
-        self.project_entry = customtkinter.CTkEntry(self, placeholder_text="project")
-        self.project_entry.pack(side="left")
+        self.project_entry = customtkinter.CTkEntry(
+            self.container_1, placeholder_text="project", width=125
+        )
+        self.project_entry.pack(side="left", fill="x", padx=5)
 
-        self.issue_entry = customtkinter.CTkEntry(self, placeholder_text="issue")
-        self.issue_entry.pack(side="left")
+        self.issue_entry = customtkinter.CTkEntry(
+            self.container_1, placeholder_text="issue", width=125
+        )
+        self.issue_entry.pack(side="left", fill="x", padx=5)
 
-        self.notes_entry = customtkinter.CTkEntry(self, placeholder_text="notes")
-        self.notes_entry.pack(side="left")
+        self.notes_entry = customtkinter.CTkEntry(
+            self.container_2, placeholder_text="notes" 
+        )
+        self.notes_entry.pack(side="top", fill="both", expand="true", padx=5, pady=5) 
 
         self.write_button = customtkinter.CTkButton(
-            self, text="Write", command=self.log_activity
+            self.container_2, text="Write", command=self.log_activity
         )
-        self.write_button.pack(side="left")
+        self.write_button.pack(side="bottom", fill="x", expand="true", padx=5, pady=5)
 
     def log_activity(self):
         activity_log = [
@@ -90,12 +103,15 @@ class Journal(customtkinter.CTkFrame):
 class App(customtkinter.CTk):
     def __init__(self):
         super().__init__()
+        self.main_container = customtkinter.CTkFrame(self)
+        self.main_container.pack(fill="both", expand=True)
         self.title("Keepr")
-        self.geometry("600x150")
-        self.clock_frame = Clock(master=self)
-        self.clock_frame.grid(row=0, column=0, padx=0, pady=0, sticky="nsew")
-        self.journal_frame = Journal(master=self, clock=self.clock_frame)
-        self.journal_frame.grid(row=1, column=0, padx=0, pady=0, sticky="nsew")
+        self.geometry("425x275")
+        
+        self.clock_frame = Clock(master=self.main_container)
+        self.journal_frame = Journal(master=self.main_container, clock=self.clock_frame)
+        self.clock_frame.pack(fill="x", padx=10, pady=5)
+        self.journal_frame.pack(fill="x", padx=10, pady=5)
 
 
 app = App()
