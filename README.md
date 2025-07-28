@@ -10,6 +10,12 @@ I plan on continually updating this to be as available as possible across operat
 
 This probably could have been written in C.
 
+## Things to note
+Linux users - This app uses tkinter and CustomTKinter, which may not be avaialble in your distro.  
+
+All of the packages used here are time-zone naive, meaning real time and measured time is gathered
+from your system's clock.
+
 ## Using the UI
 
 ### The clock
@@ -27,11 +33,3 @@ On the bottom row of the window, the notes are divided into 4 optional input fie
 Team, Project, Issue/Ticket, and Notes. The stored notes can be exported at any time 
 with the *Export* option in the lowest right corner. This can be exported as a CSV file
 with an additional timestamp field at the front of each row.
-
-## Using the command line flags (Linux)
-```
---help               Show this screen
---r, --realmode      Set clock for system time rather than expired time.
-```
-
-
